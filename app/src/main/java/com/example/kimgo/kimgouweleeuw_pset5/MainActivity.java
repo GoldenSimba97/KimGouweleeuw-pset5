@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvItems;
     EditText newTodo;
     MainActivity mainAct;
+    TodoAdapter todoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {
-            TodoAdapter todoAdapter = new TodoAdapter(mainAct, todoList);
+            todoAdapter = new TodoAdapter(mainAct, todoList);
             Contact toDo = todoAdapter.getItem(position);
             view.setBackgroundColor(Color.parseColor("#00C853"));
             assert toDo != null;
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view,
                                        int position, long id) {
-            TodoAdapter todoAdapter = new TodoAdapter(mainAct, todoList);
+            todoAdapter = new TodoAdapter(mainAct, todoList);
             toDo = todoAdapter.getItem(position);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
@@ -131,33 +132,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Create costum adapter for displaying the listview
-    private class TodoAdapter extends ArrayAdapter<Contact> {
-        TodoAdapter(Context context, ArrayList<Contact> todoList) {
-            super(context, 0, todoList);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-            Contact toDo = getItem(position);
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo, parent, false);
-            }
-            TextView tvTitle = convertView.findViewById(R.id.tvTitle);
-            assert toDo != null;
-            tvTitle.setText(toDo.title);
-            if (toDo.getCompleted() == 1) {
-                convertView.setBackgroundColor(Color.parseColor("#00C853"));
-            }
-            return convertView;
-        }
-    }
+//    // Create costum adapter for displaying the listview
+//    private class TodoAdapter extends ArrayAdapter<Contact> {
+//        TodoAdapter(Context context, ArrayList<Contact> todoList) {
+//            super(context, 0, todoList);
+//        }
+//
+//        @NonNull
+//        @Override
+//        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+//            Contact toDo = getItem(position);
+//            if (convertView == null) {
+//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo, parent, false);
+//            }
+//            TextView tvTitle = convertView.findViewById(R.id.tvTitle);
+//            assert toDo != null;
+//            tvTitle.setText(toDo.title);
+//            if (toDo.getCompleted() == 1) {
+//                convertView.setBackgroundColor(Color.parseColor("#00C853"));
+//            }
+//            return convertView;
+//        }
+//    }
 
 
     // Display all to-dos in the database in a listview
     public void makeTodoAdapter() {
-        TodoAdapter todoAdapter = new TodoAdapter(this, todoList);
+        todoAdapter = new TodoAdapter(this, todoList);
         lvItems = (ListView) findViewById(R.id.listViewID);
         assert lvItems != null;
         lvItems.setAdapter(todoAdapter);
