@@ -21,7 +21,10 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_ID = "_id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_COMPLETED = "completed";
+    private static final String KEY_LIST = "list";
+    private static final String KEY_LISTID = "list_id";
     private static final String TABLE = "contactTable";
+    private static final String TABLE2 = "listTable";
 
 
     // Constructor
@@ -32,12 +35,17 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        String CREATE_DB2 = "CREATE TABLE " + TABLE2 + "("
+                + KEY_LISTID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + KEY_LIST + " TEXT NOT NULL);";
         String CREATE_DB = "CREATE TABLE " + TABLE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + KEY_TITLE + " TEXT NOT NULL, "
-                + KEY_COMPLETED + " TEXT NOT NULL);";
+                + KEY_COMPLETED + " TEXT NOT NULL, "
+                + KEY_LISTID + " INTEGER);";
         db.execSQL(CREATE_DB);
-        Log.d("hello", "hello");
+        db.execSQL(CREATE_DB2);
+//        Log.d("hello", "hello");
     }
 
 
@@ -47,8 +55,9 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    void create(Contact toDo) {
+    void createTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
+//        onUpgrade(db, 2, 3);
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, toDo.getTitle());
         values.put(KEY_COMPLETED, toDo.getCompleted());
@@ -57,7 +66,17 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    ArrayList<Contact> read() {
+    void createList(TodoList todoList) {
+        SQLiteDatabase db = getWritableDatabase();
+//        onUpgrade(db, 2, 3);
+        ContentValues values = new ContentValues();
+        values.put(KEY_LIST, todoList.getTitle());
+        db.insert(TABLE2, null, values);
+        db.close();
+    }
+
+
+    ArrayList<Contact> readTodo() {
         SQLiteDatabase db = getReadableDatabase();
 
         // A list of costum objects to store our data
@@ -89,8 +108,39 @@ class DBHelper extends SQLiteOpenHelper {
         return toDos;
     }
 
+    ArrayList<TodoList> readList() {
+        SQLiteDatabase db = getReadableDatabase();
 
-    int update(Contact toDo) {
+        // A list of costum objects to store our data
+        ArrayList<TodoList> todoLists = new ArrayList<>();
+
+        // Create a query to give to the cursor
+        String query = "SELECT " + KEY_LISTID + ", " + KEY_LIST + " FROM " + TABLE2;
+        Cursor cursor = db.rawQuery(query, null);
+
+        // Set cursor to the beginning of our database
+        if (cursor.moveToFirst()) {
+            do {
+                // Add id, done-status and to-do from current row to to-do-list
+                String title = cursor.getString(cursor.getColumnIndex(KEY_LIST));
+                int id = cursor.getInt(cursor.getColumnIndex(KEY_LISTID));
+
+                // Create a TodoList object with the newly retrieved data
+                TodoList list = new TodoList(title, id);
+                todoLists.add(list);
+            }
+            // While there is still a next entry
+            while (cursor.moveToNext());
+        }
+
+        // Close the database and the cursor
+        cursor.close();
+        db.close();
+        return todoLists;
+    }
+
+
+    int updateTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -101,10 +151,26 @@ class DBHelper extends SQLiteOpenHelper {
         return db.update(TABLE, values, KEY_ID + " = ? ", new String[] { String.valueOf(toDo.getID())});
     }
 
+    int updateList(TodoList todoListItem) {
+        SQLiteDatabase db = getWritableDatabase();
 
-    void delete(Contact toDo) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_LIST, todoListItem.getTitle());
+
+        // Return whether it has succeeded or not
+        return db.update(TABLE2, values, KEY_LISTID + " = ? ", new String[] { String.valueOf(todoListItem.getID())});
+    }
+
+
+    void deleteTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE, " " + KEY_ID + " = ? ", new String[] { String.valueOf(toDo.getID())});
+        db.close();
+    }
+
+    void deleteList(TodoList todoListItem) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE2, " " + KEY_LISTID + " = ? ", new String[] { String.valueOf(todoListItem.getID())});
         db.close();
     }
 

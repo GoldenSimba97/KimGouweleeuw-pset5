@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KimGouweleeuw-pset5</string>
     <string name="addTodo">Add to-do</string>
+    <string name="addTodoList">Add to-do list</string>
 </resources>

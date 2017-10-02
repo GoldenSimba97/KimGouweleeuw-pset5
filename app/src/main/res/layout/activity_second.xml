@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.kimgo.kimgouweleeuw_pset5.MainActivity">
+    tools:context="com.example.kimgo.kimgouweleeuw_pset5.SecondActivity">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".7"
-            android:text="@string/addTodoList" />
+            android:text="@string/addTodo" />
 
     </LinearLayout>
 
