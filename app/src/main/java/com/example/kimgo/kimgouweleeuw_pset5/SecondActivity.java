@@ -40,7 +40,7 @@ public class SecondActivity extends AppCompatActivity {
 
         // Create the databasehelper
         context = this;
-        helper = new DBHelper(context);
+        helper = DBHelper.getsInstance(context);
 
         TextView titleList = (TextView) findViewById(R.id.listTitle);
 
