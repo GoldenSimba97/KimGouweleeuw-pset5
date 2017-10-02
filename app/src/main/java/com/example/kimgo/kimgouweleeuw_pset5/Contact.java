@@ -23,10 +23,22 @@ class Contact implements Serializable {
         completed = todoCompleted;
     }
 
+    Contact(int list_id, String todoTitle) {
+        listID = list_id;
+        title = todoTitle;
+    }
+
     Contact(String todoTitle, int todoCompleted, int todoID) {
         title = todoTitle;
         completed = todoCompleted;
         _id = todoID;
+    }
+
+    Contact(String todoTitle, int todoCompleted, int todoID, int list_id) {
+        title = todoTitle;
+        completed = todoCompleted;
+        _id = todoID;
+        listID = list_id;
     }
 
     // Get the to-do title
@@ -37,6 +49,9 @@ class Contact implements Serializable {
 
     // Get the to-do id
     int getID() { return _id; }
+
+    // Get the list id
+    int getListID() { return listID; }
 
     // Set if to-do is completed
     void setCompleted() { completed = 1; }

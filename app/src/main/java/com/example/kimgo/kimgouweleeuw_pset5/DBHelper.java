@@ -17,7 +17,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     // Static strings
     private static final String DATABASE_NAME = "ContactDB.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private static final String KEY_ID = "_id";
     private static final String KEY_TITLE = "title";
     private static final String KEY_COMPLETED = "completed";
@@ -51,16 +51,18 @@ class DBHelper extends SQLiteOpenHelper {
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE2);
         onCreate(db);
     }
 
 
     void createTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
-//        onUpgrade(db, 2, 3);
+//        onUpgrade(db, 4, 5);
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, toDo.getTitle());
         values.put(KEY_COMPLETED, toDo.getCompleted());
+        values.put(KEY_LISTID, toDo.getListID());
         db.insert(TABLE, null, values);
         db.close();
     }
@@ -68,7 +70,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     void createList(TodoList todoList) {
         SQLiteDatabase db = getWritableDatabase();
-//        onUpgrade(db, 2, 3);
+//        onUpgrade(db, 4, 5);
         ContentValues values = new ContentValues();
         values.put(KEY_LIST, todoList.getTitle());
         db.insert(TABLE2, null, values);
@@ -76,14 +78,14 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    ArrayList<Contact> readTodo() {
+    ArrayList<Contact> readTodo(int list_id) {
         SQLiteDatabase db = getReadableDatabase();
 
         // A list of costum objects to store our data
         ArrayList<Contact> toDos = new ArrayList<>();
 
         // Create a query to give to the cursor
-        String query = "SELECT " + KEY_ID + ", " + KEY_TITLE + ", " + KEY_COMPLETED + " FROM " + TABLE;
+        String query = "SELECT " + KEY_ID + ", " + KEY_TITLE + ", " + KEY_COMPLETED + ", " + KEY_LISTID + " FROM " + TABLE;
         Cursor cursor = db.rawQuery(query, null);
 
         // Set cursor to the beginning of our database
@@ -93,10 +95,13 @@ class DBHelper extends SQLiteOpenHelper {
                 String title = cursor.getString(cursor.getColumnIndex(KEY_TITLE));
                 int completed = cursor.getInt(cursor.getColumnIndex(KEY_COMPLETED));
                 int id = cursor.getInt(cursor.getColumnIndex(KEY_ID));
+                int listID = cursor.getInt(cursor.getColumnIndex(KEY_LISTID));
 
-                // Create a contact object with the newly retrieved data
-                Contact toDo = new Contact(title, completed, id);
-                toDos.add(toDo);
+                if (list_id == listID) {
+                    // Create a contact object with the newly retrieved data
+                    Contact toDo = new Contact(title, completed, id, listID);
+                    toDos.add(toDo);
+                }
             }
             // While there is still a next entry
             while (cursor.moveToNext());

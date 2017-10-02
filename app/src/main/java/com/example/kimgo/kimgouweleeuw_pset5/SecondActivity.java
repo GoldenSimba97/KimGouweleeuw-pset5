@@ -50,7 +50,7 @@ public class SecondActivity extends AppCompatActivity {
         Log.d("title", listTitle);
         titleList.setText(listTitle);
 
-        todoList = helper.readTodo();
+        todoList = helper.readTodo(listID);
 
 //        if (todoList.isEmpty()) {
 //            Contact newTodo = new Contact("Add a new to-do by typing your to-do and clicking the ADD-TO-DO button");
@@ -106,7 +106,7 @@ public class SecondActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     helper.deleteTodo(toDo);
-                    todoList = helper.readTodo();
+                    todoList = helper.readTodo(listID);
                     makeTodoAdapter();
                 }
             });
@@ -129,10 +129,10 @@ public class SecondActivity extends AppCompatActivity {
             String addTodo = newTodo.getText().toString();
             if (!addTodo.isEmpty()) {
                 addTodo = addTodo.substring(0, 1).toUpperCase() + addTodo.substring(1);
-                toDo = new Contact(addTodo);
+                toDo = new Contact(listID, addTodo);
                 helper.createTodo(toDo);
                 newTodo.getText().clear();
-                todoList = helper.readTodo();
+                todoList = helper.readTodo(listID);
                 makeTodoAdapter();
             }
         }
