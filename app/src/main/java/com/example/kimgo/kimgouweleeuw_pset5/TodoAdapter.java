@@ -15,16 +15,12 @@ import java.util.ArrayList;
  * TodoAdapter created by kimgo on 1-10-2017.
  */
 
-public class TodoAdapter extends ArrayAdapter<Contact> {
-    ArrayList<Contact> todos;
-//    private Context context;
-//    private MainActivity mainAct;
+class TodoAdapter extends ArrayAdapter<Contact> {
+    private ArrayList<Contact> todos;
 
-    public TodoAdapter(Context context, ArrayList<Contact> todoList) {
+    TodoAdapter(Context context, ArrayList<Contact> todoList) {
         super(context, 0, todoList);
         this.todos = todoList;
-//        this.mainAct = (MainActivity) context;
-//        this.context = context;
     }
 
     @NonNull
@@ -36,8 +32,6 @@ public class TodoAdapter extends ArrayAdapter<Contact> {
         }
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         assert toDo != null;
-//        String titleTodo = toDo.getTitle();
-//        tvTitle.setText(titleTodo);
         tvTitle.setText(toDo.title);
         if (toDo.getCompleted() == 1) {
             convertView.setBackgroundColor(Color.parseColor("#00C853"));

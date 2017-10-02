@@ -13,25 +13,9 @@ class Contact implements Serializable {
     private int listID;
 
     // Constructor for to-do from database
-    Contact(String todoTitle) {
-        title = todoTitle;
-        completed = 0;
-    }
-
-    Contact(String todoTitle, int todoCompleted) {
-        title = todoTitle;
-        completed = todoCompleted;
-    }
-
     Contact(int list_id, String todoTitle) {
         listID = list_id;
         title = todoTitle;
-    }
-
-    Contact(String todoTitle, int todoCompleted, int todoID) {
-        title = todoTitle;
-        completed = todoCompleted;
-        _id = todoID;
     }
 
     Contact(String todoTitle, int todoCompleted, int todoID, int list_id) {

@@ -12,19 +12,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by kimgo on 2-10-2017.
+ * TodoListAdapter created by kimgo on 2-10-2017.
  */
 
-public class TodoListAdapter extends ArrayAdapter<TodoList> {
-    ArrayList<TodoList> todoLists;
-//    private Context context;
-//    private MainActivity mainAct;
+class TodoListAdapter extends ArrayAdapter<TodoList> {
+    private ArrayList<TodoList> todoLists;
 
-    public TodoListAdapter(Context context, ArrayList<TodoList> todoList) {
+    TodoListAdapter(Context context, ArrayList<TodoList> todoList) {
         super(context, 0, todoList);
         this.todoLists = todoList;
-//        this.mainAct = (MainActivity) context;
-//        this.context = context;
     }
 
     @NonNull
@@ -36,12 +32,7 @@ public class TodoListAdapter extends ArrayAdapter<TodoList> {
         }
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
         assert todoListItem != null;
-//        String titleTodo = toDo.getTitle();
-//        tvTitle.setText(titleTodo);
         tvTitle.setText(todoListItem.title);
-//        if (toDo.getCompleted() == 1) {
-//            convertView.setBackgroundColor(Color.parseColor("#00C853"));
-//        }
         return convertView;
     }
 }

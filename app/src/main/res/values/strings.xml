@@ -2,4 +2,5 @@
     <string name="app_name">KimGouweleeuw-pset5</string>
     <string name="addTodo">Add to-do</string>
     <string name="addTodoList">Add list</string>
+    <string name="change">Change title</string>
 </resources>

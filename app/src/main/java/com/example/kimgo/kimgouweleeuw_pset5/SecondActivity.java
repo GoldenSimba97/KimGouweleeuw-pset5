@@ -52,19 +52,6 @@ public class SecondActivity extends AppCompatActivity {
 
         todoList = helper.readTodo(listID);
 
-//        if (todoList.isEmpty()) {
-//            Contact newTodo = new Contact("Add a new to-do by typing your to-do and clicking the ADD-TO-DO button");
-//            helper.create(newTodo);
-//
-//            Contact done = new Contact("Click on your to-do to mark it as done and it will become green", 1);
-//            helper.create(done);
-//
-//            Contact delete = new Contact("Click and hold your to-do to delete it");
-//            helper.create(delete);
-//
-//            todoList = helper.read();
-//        }
-
         lvItems = (ListView) findViewById(R.id.listViewID);
 
         findViewById(R.id.addTodo).setOnClickListener(new SecondActivity.addToDo());
@@ -101,34 +88,14 @@ public class SecondActivity extends AppCompatActivity {
             toDo = todoAdapter.getItem(position);
 
             showPopUp(toDo);
-
-//            AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
-//            builder.setCancelable(true);
-//            builder.setMessage("Are you sure you want to delete this to-do?");
-//            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    helper.deleteTodo(toDo);
-//                    todoList = helper.readTodo(listID);
-//                    makeTodoAdapter();
-//                }
-//            });
-//            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    makeTodoAdapter();
-//                }
-//            });
-//            AlertDialog dialog = builder.create();
-//            dialog.show();
             return true;
         }
     }
 
+
     private void showPopUp(final Contact toDo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
         builder.setCancelable(true);
-//        builder.setMessage("Are you sure you want to delete this to-do?");
         builder.setPositiveButton("Delete this to-do", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -140,7 +107,6 @@ public class SecondActivity extends AppCompatActivity {
         builder.setNegativeButton("Change to-do title", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                makeTodoAdapter();
                 changeTitle(toDo);
             }
         });
@@ -148,12 +114,14 @@ public class SecondActivity extends AppCompatActivity {
         dialog.show();
     }
 
+
     private void changeTitle(final Contact toDo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
         builder.setCancelable(true);
         builder.setMessage("Please enter a new title");
         final EditText input = new EditText(SecondActivity.this);
         builder.setView(input);
+
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -184,30 +152,6 @@ public class SecondActivity extends AppCompatActivity {
             }
         }
     }
-
-
-//    // Create costum adapter for displaying the listview
-//    private class TodoAdapter extends ArrayAdapter<Contact> {
-//        TodoAdapter(Context context, ArrayList<Contact> todoList) {
-//            super(context, 0, todoList);
-//        }
-//
-//        @NonNull
-//        @Override
-//        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-//            Contact toDo = getItem(position);
-//            if (convertView == null) {
-//                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo, parent, false);
-//            }
-//            TextView tvTitle = convertView.findViewById(R.id.tvTitle);
-//            assert toDo != null;
-//            tvTitle.setText(toDo.title);
-//            if (toDo.getCompleted() == 1) {
-//                convertView.setBackgroundColor(Color.parseColor("#00C853"));
-//            }
-//            return convertView;
-//        }
-//    }
 
 
     // Display all to-dos in the database in a listview

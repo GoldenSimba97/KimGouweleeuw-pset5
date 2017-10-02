@@ -1,10 +1,10 @@
 package com.example.kimgo.kimgouweleeuw_pset5;
 
 /**
- * Created by kimgo on 2-10-2017.
+ * TodoList created by kimgo on 2-10-2017.
  */
 
-public class TodoList {
+class TodoList {
     String title;
     private int _id;
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -30,7 +29,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     // Method to retrieve the current instance of the singleton
     // If it does not exist yet, it will create one with the applicationcontext
-    public static synchronized DBHelper getsInstance(Context context) {
+    static synchronized DBHelper getsInstance(Context context) {
         if (sInstance == null) {
             sInstance = new DBHelper(context.getApplicationContext());
         }
@@ -56,7 +55,6 @@ class DBHelper extends SQLiteOpenHelper {
                 + KEY_LISTID + " INTEGER);";
         db.execSQL(CREATE_DB);
         db.execSQL(CREATE_DB2);
-//        Log.d("hello", "hello");
     }
 
 
