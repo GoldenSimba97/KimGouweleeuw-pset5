@@ -8,7 +8,7 @@ public class TodoList {
     String title;
     private int _id;
 
-    // Constructor for to-do from database
+    // Constructor for to-do list from database
     TodoList(String listTitle) {
         title = listTitle;
     }
@@ -18,9 +18,12 @@ public class TodoList {
         _id = listID;
     }
 
-    // Get the to-do title
+    // Get the list title
     String getTitle() { return title; }
 
-    // Get the to-do id
+    // Get the list id
     int getID() { return _id; }
+
+    // Set the title
+    void setTitle(String newTitle) { title = newTitle; }
 }

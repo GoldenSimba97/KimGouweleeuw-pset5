@@ -100,34 +100,80 @@ public class MainActivity extends AppCompatActivity {
 
     // Delete to-do if it is long clicked
     private class deleteTodo implements AdapterView.OnItemLongClickListener {
-//        Contact toDo;
+        TodoList toDo;
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view,
                                        int position, long id) {
             todoListAdapter = new TodoListAdapter(mainAct, todoList);
             toDo = todoListAdapter.getItem(position);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
-            builder.setCancelable(true);
-            builder.setMessage("Are you sure you want to delete this to-do list?");
-            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    helper.deleteList(toDo);
-                    todoList = helper.readList();
-                    makeTodoAdapter();
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    makeTodoAdapter();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            showPopUp(toDo);
+
+//            AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
+//            builder.setCancelable(true);
+//            builder.setMessage("Are you sure you want to delete this to-do list?");
+//            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    helper.deleteList(toDo);
+//                    todoList = helper.readList();
+//                    makeTodoAdapter();
+//                }
+//            });
+//            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    makeTodoAdapter();
+//                }
+//            });
+//            AlertDialog dialog = builder.create();
+//            dialog.show();
             return true;
         }
+    }
+
+    private void showPopUp(final TodoList toDo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
+        builder.setCancelable(true);
+//        builder.setMessage("Are you sure you want to delete this to-do?");
+        builder.setPositiveButton("Delete this list", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                helper.deleteList(toDo);
+                todoList = helper.readList();
+                makeTodoAdapter();
+            }
+        });
+        builder.setNegativeButton("Change list title", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                makeTodoAdapter();
+                changeTitle(toDo);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void changeTitle(final TodoList toDo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
+        builder.setCancelable(true);
+        builder.setMessage("Please enter a new title");
+        final EditText input = new EditText(MainActivity.this);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newTitle = input.getText().toString();
+                newTitle = newTitle.substring(0, 1).toUpperCase() + newTitle.substring(1);
+                toDo.setTitle(newTitle);
+                helper.updateList(toDo);
+                todoList = helper.readList();
+                makeTodoAdapter();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 

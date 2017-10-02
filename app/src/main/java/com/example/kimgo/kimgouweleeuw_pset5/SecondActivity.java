@@ -87,27 +87,6 @@ public class SecondActivity extends AppCompatActivity {
             assert toDo != null;
             toDo.setCompleted();
             helper.updateTodo(toDo);
-
-//            AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
-//            builder.setCancelable(true);
-////            builder.setMessage("Are you sure you want to delete this to-do?");
-//            builder.setPositiveButton("Mark as done", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    view.setBackgroundColor(Color.parseColor("#00C853"));
-//                    assert toDo != null;
-//                    toDo.setCompleted();
-//                    helper.updateTodo(toDo);
-//                }
-//            });
-//            builder.setNegativeButton("Change title to-do", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    makeTodoAdapter();
-//                }
-//            });
-//            AlertDialog dialog = builder.create();
-//            dialog.show();
         }
     }
 
@@ -158,7 +137,7 @@ public class SecondActivity extends AppCompatActivity {
                 makeTodoAdapter();
             }
         });
-        builder.setNegativeButton("Change title to-do", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Change to-do title", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 //                makeTodoAdapter();
