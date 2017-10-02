@@ -55,4 +55,7 @@ class Contact implements Serializable {
 
     // Set if to-do is completed
     void setCompleted() { completed = 1; }
+
+    // Set new to-do title
+    void setTitle(String newTitle) { title = newTitle; }
 }

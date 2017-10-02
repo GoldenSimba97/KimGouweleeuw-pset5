@@ -77,15 +77,37 @@ public class SecondActivity extends AppCompatActivity {
 
     // Set to-do to done and color it green if clicked
     private class setDone implements AdapterView.OnItemClickListener {
+        Contact toDo;
         @Override
-        public void onItemClick(AdapterView<?> parent, View view,
+        public void onItemClick(AdapterView<?> parent, final View view,
                                 int position, long id) {
             todoAdapter = new TodoAdapter(secondAct, todoList);
-            Contact toDo = todoAdapter.getItem(position);
+            toDo = todoAdapter.getItem(position);
             view.setBackgroundColor(Color.parseColor("#00C853"));
             assert toDo != null;
             toDo.setCompleted();
             helper.updateTodo(toDo);
+
+//            AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
+//            builder.setCancelable(true);
+////            builder.setMessage("Are you sure you want to delete this to-do?");
+//            builder.setPositiveButton("Mark as done", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    view.setBackgroundColor(Color.parseColor("#00C853"));
+//                    assert toDo != null;
+//                    toDo.setCompleted();
+//                    helper.updateTodo(toDo);
+//                }
+//            });
+//            builder.setNegativeButton("Change title to-do", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    makeTodoAdapter();
+//                }
+//            });
+//            AlertDialog dialog = builder.create();
+//            dialog.show();
         }
     }
 
@@ -99,27 +121,73 @@ public class SecondActivity extends AppCompatActivity {
             todoAdapter = new TodoAdapter(secondAct, todoList);
             toDo = todoAdapter.getItem(position);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
-            builder.setCancelable(true);
-            builder.setMessage("Are you sure you want to delete this to-do?");
-            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    helper.deleteTodo(toDo);
-                    todoList = helper.readTodo(listID);
-                    makeTodoAdapter();
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    makeTodoAdapter();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            showPopUp(toDo);
+
+//            AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
+//            builder.setCancelable(true);
+//            builder.setMessage("Are you sure you want to delete this to-do?");
+//            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    helper.deleteTodo(toDo);
+//                    todoList = helper.readTodo(listID);
+//                    makeTodoAdapter();
+//                }
+//            });
+//            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    makeTodoAdapter();
+//                }
+//            });
+//            AlertDialog dialog = builder.create();
+//            dialog.show();
             return true;
         }
+    }
+
+    private void showPopUp(final Contact toDo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
+        builder.setCancelable(true);
+//        builder.setMessage("Are you sure you want to delete this to-do?");
+        builder.setPositiveButton("Delete this to-do", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                helper.deleteTodo(toDo);
+                todoList = helper.readTodo(listID);
+                makeTodoAdapter();
+            }
+        });
+        builder.setNegativeButton("Change title to-do", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                makeTodoAdapter();
+                changeTitle(toDo);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void changeTitle(final Contact toDo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
+        builder.setCancelable(true);
+        builder.setMessage("Please enter a new title");
+        final EditText input = new EditText(SecondActivity.this);
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String newTitle = input.getText().toString();
+                newTitle = newTitle.substring(0, 1).toUpperCase() + newTitle.substring(1);
+                toDo.setTitle(newTitle);
+                helper.updateTodo(toDo);
+                todoList = helper.readTodo(listID);
+                makeTodoAdapter();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 
