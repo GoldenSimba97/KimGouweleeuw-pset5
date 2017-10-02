@@ -6,10 +6,14 @@ import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -22,11 +26,12 @@ public class SecondActivity extends AppCompatActivity {
     EditText newTodo;
     SecondActivity secondAct;
     TodoAdapter todoAdapter;
+    int listID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
         secondAct = this;
 
@@ -37,7 +42,15 @@ public class SecondActivity extends AppCompatActivity {
         context = this;
         helper = new DBHelper(context);
 
-//        todoList = helper.read();
+        TextView titleList = (TextView) findViewById(R.id.listTitle);
+
+        Bundle extras = getIntent().getExtras();
+        String listTitle = extras.getString("listTitle");
+        listID = extras.getInt("listID");
+        Log.d("title", listTitle);
+        titleList.setText(listTitle);
+
+        todoList = helper.readTodo();
 
 //        if (todoList.isEmpty()) {
 //            Contact newTodo = new Contact("Add a new to-do by typing your to-do and clicking the ADD-TO-DO button");

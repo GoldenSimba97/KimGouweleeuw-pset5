@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context="com.example.kimgo.kimgouweleeuw_pset5.SecondActivity">
 
+    <TextView
+        android:id="@+id/listTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

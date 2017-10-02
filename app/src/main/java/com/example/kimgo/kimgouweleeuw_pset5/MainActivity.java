@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,26 +65,37 @@ public class MainActivity extends AppCompatActivity {
         lvItems = (ListView) findViewById(R.id.listViewID);
 
         findViewById(R.id.addTodo).setOnClickListener(new addToDo());
-//        lvItems.setOnItemClickListener(new setDone());
+        lvItems.setOnItemClickListener(new setDone());
         lvItems.setOnItemLongClickListener(new deleteTodo());
 
         makeTodoAdapter();
     }
 
 
-//    // Set to-do to done and color it green if clicked
-//    private class setDone implements AdapterView.OnItemClickListener {
-//        @Override
-//        public void onItemClick(AdapterView<?> parent, View view,
-//                                int position, long id) {
-//            todoListAdapter = new TodoListAdapter(mainAct, todoList);
-//            TodoList toDo = todoListAdapter.getItem(position);
+    // Set to-do to done and color it green if clicked
+    private class setDone implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view,
+                                int position, long id) {
+            todoListAdapter = new TodoListAdapter(mainAct, todoList);
+            toDo = todoListAdapter.getItem(position);
 //            view.setBackgroundColor(Color.parseColor("#00C853"));
 //            assert toDo != null;
 //            toDo.setCompleted();
 //            helper.update(toDo);
-//        }
-//    }
+            Intent intent = new Intent(view.getContext(), SecondActivity.class);
+            Bundle bundle = new Bundle();
+
+//            bundle.putSerializable("listID", toDo);
+            Log.d("title2", toDo.getTitle());
+            bundle.putString("listTitle", toDo.getTitle());
+            bundle.putInt("listID", toDo.getID());
+            intent.putExtras(bundle);
+//            intent.putExtra("listID", toDo);
+            startActivity(intent);
+//            finish();
+        }
+    }
 
 
     // Delete to-do if it is long clicked

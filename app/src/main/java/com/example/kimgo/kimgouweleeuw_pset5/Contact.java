@@ -10,6 +10,7 @@ class Contact implements Serializable {
     String title;
     private int completed;
     private int _id;
+    private int listID;
 
     // Constructor for to-do from database
     Contact(String todoTitle) {
