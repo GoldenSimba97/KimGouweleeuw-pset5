@@ -17,6 +17,13 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+/**
+ * SecondActivity created by kimgo on 1-10-2017.
+ * This activity displays all to-do items and
+ * performs all functions below on these to-do
+ * items.
+ */
+
 public class SecondActivity extends AppCompatActivity {
     Context context;
     DBHelper helper;
@@ -58,6 +65,8 @@ public class SecondActivity extends AppCompatActivity {
         makeTodoAdapter();
     }
 
+
+    // Update to-do item
     private void update(Contact toDo) {
         helper.updateTodo(toDo);
     }
@@ -79,7 +88,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
 
-    // Delete to-do if it is long clicked
+    // Give option to delete to-do item or change title if it is long clicked
     private class deleteTodo implements AdapterView.OnItemLongClickListener {
         Contact toDo;
         @Override
@@ -94,6 +103,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
 
+    // Show option to delete to-do item or change title
     private void showPopUp(final Contact toDo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
         builder.setCancelable(true);
@@ -115,6 +125,7 @@ public class SecondActivity extends AppCompatActivity {
     }
 
 
+    // Change title of to-do item
     private void changeTitle(final Contact toDo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(secondAct);
         builder.setCancelable(true);

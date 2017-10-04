@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * TodoAdapter created by kimgo on 1-10-2017.
+ * Custom adapter for displaying of to-do items.
  */
 
 class TodoAdapter extends ArrayAdapter<Contact> {

@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 /**
  * Contact created by kimgo on 1-10-2017.
+ * Holds all functions for constructing and
+ * using the Contact object with information
+ * on the to-do title and if it is completed.
  */
 
 class Contact implements Serializable {

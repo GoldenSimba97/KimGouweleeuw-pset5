@@ -1,7 +1,6 @@
 package com.example.kimgo.kimgouweleeuw_pset5;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * TodoListAdapter created by kimgo on 2-10-2017.
+ * Custom adapter for displaying of to-do lists.
  */
 
 class TodoListAdapter extends ArrayAdapter<TodoList> {

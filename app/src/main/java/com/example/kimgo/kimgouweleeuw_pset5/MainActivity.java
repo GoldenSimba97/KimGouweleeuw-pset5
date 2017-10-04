@@ -3,22 +3,22 @@ package com.example.kimgo.kimgouweleeuw_pset5;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
+
+/**
+ * MainActivity created by kimgo on 1-10-2017.
+ * This activity displays all to-do lists and
+ * performs all functions below on these to-do
+ * lists.
+ */
 
 public class MainActivity extends AppCompatActivity {
     Context context;
@@ -47,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
         lvItems = (ListView) findViewById(R.id.listViewID);
 
         findViewById(R.id.addTodo).setOnClickListener(new addToDo());
-        lvItems.setOnItemClickListener(new setDone());
+        lvItems.setOnItemClickListener(new goToTodo());
         lvItems.setOnItemLongClickListener(new deleteTodo());
 
         makeTodoAdapter();
     }
 
 
-    // Set to-do to done and color it green if clicked
-    private class setDone implements AdapterView.OnItemClickListener {
+    // Go to the next activity with the content of the clicked to-do list
+    private class goToTodo implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Delete to-do if it is long clicked
+    // Give option to delete to-do list or change title if it is long clicked
     private class deleteTodo implements AdapterView.OnItemLongClickListener {
         TodoList toDo;
         @Override
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Show option to delete to-do list or change title
     private void showPopUp(final TodoList toDo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
         builder.setCancelable(true);
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // Change title of to-do list
     private void changeTitle(final TodoList toDo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mainAct);
         builder.setCancelable(true);
@@ -129,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+
+    // Create string from title typed in editText
     public String createString() {
         String addTodo = newTodo.getText().toString();
         if (!addTodo.isEmpty()) {
@@ -138,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Add to-do to to-do-list
+    // Add to-do list
     private class addToDo implements View.OnClickListener {
         @Override public void onClick(View view) {
             if (!createString().isEmpty()) {
@@ -151,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // Display all to-dos in the database in a listview
+    // Display all to-do lists in the database in a listview
     public void makeTodoAdapter() {
         todoList = helper.readList();
         todoListAdapter = new TodoListAdapter(this, todoList);

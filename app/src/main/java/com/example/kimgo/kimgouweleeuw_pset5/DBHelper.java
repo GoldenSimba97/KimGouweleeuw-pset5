@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 /**
  * DBHelper created by kimgo on 1-10-2017.
+ * Class for creating, reading, updating and
+ * deleting items in tables from a database.
  */
 
 class DBHelper extends SQLiteOpenHelper {
@@ -26,6 +28,7 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_LISTID = "list_id";
     private static final String TABLE = "contactTable";
     private static final String TABLE2 = "listTable";
+
 
     // Method to retrieve the current instance of the singleton
     // If it does not exist yet, it will create one with the applicationcontext
@@ -65,6 +68,7 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    // Create to-do items table in database
     void createTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
 //        onUpgrade(db, 4, 5);
@@ -77,6 +81,7 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    // Create to-do list items table in database
     void createList(TodoList todoList) {
         SQLiteDatabase db = getWritableDatabase();
 //        onUpgrade(db, 4, 5);
@@ -90,7 +95,7 @@ class DBHelper extends SQLiteOpenHelper {
     ArrayList<Contact> readTodo(int list_id) {
         SQLiteDatabase db = getReadableDatabase();
 
-        // A list of costum objects to store our data
+        // A list of custom objects to store our data
         ArrayList<Contact> toDos = new ArrayList<>();
 
         // Create a query to give to the cursor
@@ -125,7 +130,7 @@ class DBHelper extends SQLiteOpenHelper {
     ArrayList<TodoList> readList() {
         SQLiteDatabase db = getReadableDatabase();
 
-        // A list of costum objects to store our data
+        // A list of custom objects to store our data
         ArrayList<TodoList> todoLists = new ArrayList<>();
 
         // Create a query to give to the cursor
@@ -135,7 +140,7 @@ class DBHelper extends SQLiteOpenHelper {
         // Set cursor to the beginning of our database
         if (cursor.moveToFirst()) {
             do {
-                // Add id, done-status and to-do from current row to to-do-list
+                // Add id and to-do list from current row to to-do-list list
                 String title = cursor.getString(cursor.getColumnIndex(KEY_LIST));
                 int id = cursor.getInt(cursor.getColumnIndex(KEY_LISTID));
 
@@ -154,6 +159,7 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    // Update to-do with new values
     int updateTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -165,6 +171,8 @@ class DBHelper extends SQLiteOpenHelper {
         return db.update(TABLE, values, KEY_ID + " = ? ", new String[] { String.valueOf(toDo.getID())});
     }
 
+
+    // Update to-do list with new values
     int updateList(TodoList todoListItem) {
         SQLiteDatabase db = getWritableDatabase();
 
@@ -176,12 +184,15 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    // Delete to-do from database
     void deleteTodo(Contact toDo) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE, " " + KEY_ID + " = ? ", new String[] { String.valueOf(toDo.getID())});
         db.close();
     }
 
+
+    // Delete to-do list from database
     void deleteList(TodoList todoListItem) {
         SQLiteDatabase db = getWritableDatabase();
         db.delete(TABLE2, " " + KEY_LISTID + " = ? ", new String[] { String.valueOf(todoListItem.getID())});

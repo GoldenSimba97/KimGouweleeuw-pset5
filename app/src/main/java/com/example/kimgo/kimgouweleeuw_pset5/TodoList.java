@@ -2,6 +2,9 @@ package com.example.kimgo.kimgouweleeuw_pset5;
 
 /**
  * TodoList created by kimgo on 2-10-2017.
+ * Holds all functions for constructing and
+ * using the TodoList object with information
+ * on the to-do list title.
  */
 
 class TodoList {
@@ -24,6 +27,6 @@ class TodoList {
     // Get the list id
     int getID() { return _id; }
 
-    // Set the title
+    // Set the list title
     void setTitle(String newTitle) { title = newTitle; }
 }
