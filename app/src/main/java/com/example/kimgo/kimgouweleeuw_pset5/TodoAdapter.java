@@ -26,12 +26,14 @@ class TodoAdapter extends ArrayAdapter<Contact> {
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        Contact toDo = todos.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_todo, parent, false);
         }
         TextView tvTitle = convertView.findViewById(R.id.tvTitle);
-        tvTitle.setText(todos.get(position).title);
-        if (todos.get(position).getCompleted() == 1) {
+        assert toDo != null;
+        tvTitle.setText(toDo.title);
+        if (toDo.getCompleted() == 1) {
             convertView.setBackgroundColor(Color.parseColor("#00C853"));
         }
         return convertView;

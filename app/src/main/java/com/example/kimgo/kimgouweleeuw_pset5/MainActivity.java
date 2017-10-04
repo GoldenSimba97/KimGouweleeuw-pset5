@@ -133,14 +133,20 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public String createString() {
+        String addTodo = newTodo.getText().toString();
+        if (!addTodo.isEmpty()) {
+            addTodo = addTodo.substring(0, 1).toUpperCase() + addTodo.substring(1);
+        }
+        return addTodo;
+    }
+
 
     // Add to-do to to-do-list
     private class addToDo implements View.OnClickListener {
         @Override public void onClick(View view) {
-            String addTodo = newTodo.getText().toString();
-            if (!addTodo.isEmpty()) {
-                addTodo = addTodo.substring(0, 1).toUpperCase() + addTodo.substring(1);
-                toDo = new TodoList(addTodo);
+            if (!createString().isEmpty()) {
+                toDo = new TodoList(createString());
                 helper.createList(toDo);
                 newTodo.getText().clear();
                 todoList = helper.readList();
