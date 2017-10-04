@@ -50,8 +50,6 @@ public class SecondActivity extends AppCompatActivity {
         Log.d("title", listTitle);
         titleList.setText(listTitle);
 
-        todoList = helper.readTodo(listID);
-
         lvItems = (ListView) findViewById(R.id.listViewID);
 
         findViewById(R.id.addTodo).setOnClickListener(new SecondActivity.addToDo());
@@ -100,7 +98,6 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 helper.deleteTodo(toDo);
-                todoList = helper.readTodo(listID);
                 makeTodoAdapter();
             }
         });
@@ -129,7 +126,6 @@ public class SecondActivity extends AppCompatActivity {
                 newTitle = newTitle.substring(0, 1).toUpperCase() + newTitle.substring(1);
                 toDo.setTitle(newTitle);
                 helper.updateTodo(toDo);
-                todoList = helper.readTodo(listID);
                 makeTodoAdapter();
             }
         });
@@ -147,7 +143,6 @@ public class SecondActivity extends AppCompatActivity {
                 toDo = new Contact(listID, addTodo);
                 helper.createTodo(toDo);
                 newTodo.getText().clear();
-                todoList = helper.readTodo(listID);
                 makeTodoAdapter();
             }
         }
@@ -156,6 +151,7 @@ public class SecondActivity extends AppCompatActivity {
 
     // Display all to-dos in the database in a listview
     public void makeTodoAdapter() {
+        todoList = helper.readTodo(listID);
         todoAdapter = new TodoAdapter(this, todoList);
         lvItems = (ListView) findViewById(R.id.listViewID);
         assert lvItems != null;
