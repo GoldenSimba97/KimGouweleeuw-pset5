@@ -47,7 +47,6 @@ public class SecondActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String listTitle = extras.getString("listTitle");
         listID = extras.getInt("listID");
-        Log.d("title", listTitle);
         titleList.setText(listTitle);
 
         lvItems = (ListView) findViewById(R.id.listViewID);
@@ -57,6 +56,10 @@ public class SecondActivity extends AppCompatActivity {
         lvItems.setOnItemLongClickListener(new SecondActivity.deleteTodo());
 
         makeTodoAdapter();
+    }
+
+    private void update(Contact toDo) {
+        helper.updateTodo(toDo);
     }
 
 
@@ -71,7 +74,7 @@ public class SecondActivity extends AppCompatActivity {
             view.setBackgroundColor(Color.parseColor("#00C853"));
             assert toDo != null;
             toDo.setCompleted();
-            helper.updateTodo(toDo);
+            update(toDo);
         }
     }
 
@@ -125,7 +128,7 @@ public class SecondActivity extends AppCompatActivity {
                 String newTitle = input.getText().toString();
                 newTitle = newTitle.substring(0, 1).toUpperCase() + newTitle.substring(1);
                 toDo.setTitle(newTitle);
-                helper.updateTodo(toDo);
+                update(toDo);
                 makeTodoAdapter();
             }
         });
