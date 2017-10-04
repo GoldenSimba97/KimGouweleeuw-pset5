@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         helper = DBHelper.getsInstance(context);
 
-        todoList = helper.readList();
+//        todoList = helper.readList();
 
         lvItems = (ListView) findViewById(R.id.listViewID);
 
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 helper.deleteList(toDo);
-                todoList = helper.readList();
+//                todoList = helper.readList();
                 makeTodoAdapter();
             }
         });
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 newTitle = newTitle.substring(0, 1).toUpperCase() + newTitle.substring(1);
                 toDo.setTitle(newTitle);
                 helper.updateList(toDo);
-                todoList = helper.readList();
+//                todoList = helper.readList();
                 makeTodoAdapter();
             }
         });
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 toDo = new TodoList(createString());
                 helper.createList(toDo);
                 newTodo.getText().clear();
-                todoList = helper.readList();
+//                todoList = helper.readList();
                 makeTodoAdapter();
             }
         }
@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Display all to-dos in the database in a listview
     public void makeTodoAdapter() {
+        todoList = helper.readList();
         todoListAdapter = new TodoListAdapter(this, todoList);
         lvItems = (ListView) findViewById(R.id.listViewID);
         assert lvItems != null;
